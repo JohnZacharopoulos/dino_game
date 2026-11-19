@@ -33,7 +33,7 @@ Dino.games = Dino.games || {};
       }[ctx.level];
       var R = [0.045, 0.065, 0.09, 0.12];      // coconut radius per size
       var BOUNCE = [0.3, 0.42, 0.56, 0.7];     // how high each size bounces above the sand
-      var FLOOR = 0.9, DINO_H = 0.17, DINO_W = 0.19, WALK = 1.05, VINE_SPEED = 2.1;
+      var FLOOR = 0.9, DINO_H = 0.17, DINO_W = 0.19, WALK = 1.05, VINE_SPEED = 1.15; // vine takes ~0.7 s to reach the top
       var stage = ctx.stage, round = 0, gen = 0;
       var world, canvas, g, dpr, Hpx, aspect;
       var dino, cocos, vine, bits, keys = {}, running, last, invuln, dinoImg, dinoReady = false;
