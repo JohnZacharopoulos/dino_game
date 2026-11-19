@@ -1,6 +1,6 @@
 # 🦖 Δεινο-Παιχνίδια / Dino Games
 
-Fourteen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
+Fifteen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
 **No installation, no internet, no server:** copy the folder anywhere and double-click `index.html`.
 On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to Home Screen**.
 
@@ -18,8 +18,11 @@ On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to 
 | 🍎 **Feed the dino** – colours | "something red!" (3 foods) | 5 foods | "give me 3 yellow ones!" |
 | ✏️ **Connect the dots** | 5 dots, next one glows | 8 dots, glow after 5 s | 10 dots |
 | 🎨 **Colouring** | 4 colours | 6 colours | 8 colours + background to paint |
+| 🌿 **Hungry Dino** – eat all the leaves in the garden maze | small maze, no beetles | 1 wandering beetle, 1 golden egg | 2 beetles (one follows you), 2 golden eggs |
 | 👗 **Dress the dino** *(free play)* | choose a dinosaur, colour, hat, crown, sunglasses, bow tie, flower, then take a photo 📷 | | |
 | 🎵 **Dino sounds** *(free play)* | each dinosaur has its own voice; 🎵 starts a dance party | | |
+
+In Hungry Dino, steer with a swipe, a tap beside the dino, the arrow buttons or the keyboard. A golden egg puts the beetles to sleep. Bumping into an awake beetle just sends the dino back to the start, so there is no game over. The maze uses fewer, bigger squares on small screens.
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
 
@@ -77,7 +80,7 @@ index.html
 css/style.css
 js/core/   art.js  art-extra.js  i18n.js  store.js  speech.js  sound.js  app.js
 js/games/  one file per game (memory, maze, puzzle, fossil, eggs, shadow, odd, size,
-           pattern, feed, dots, color, build, sounds)
+           pattern, feed, dots, color, chomp, build, sounds)
 photos/    photos.js  (+ your pictures)
 ```
 
