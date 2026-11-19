@@ -9,7 +9,7 @@ window.Dino = window.Dino || {};
 
   D.games = D.games || {};
   var GAME_ORDER = ['memory', 'maze', 'puzzle', 'fossil', 'eggs', 'shadow', 'odd', 'size',
-                    'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'build', 'sounds'];
+                    'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'coco', 'build', 'sounds'];
   var LEVELS = ['easy', 'medium', 'hard'];
   var app, current = null;
   var A = D.art, I = D.i18n, ICON = D.art.ICONS;

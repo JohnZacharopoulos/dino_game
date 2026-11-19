@@ -1,6 +1,6 @@
 # 🦖 Δεινο-Παιχνίδια / Dino Games
 
-Sixteen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
+Seventeen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
 **No installation, no internet, no server:** copy the folder anywhere and double-click `index.html`.
 On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to Home Screen**.
 
@@ -20,11 +20,13 @@ On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to 
 | 🎨 **Colouring** | 4 colours | 6 colours | 8 colours + background to paint |
 | 🌿 **Hungry Dino** – eat all the leaves in the garden maze | small maze, no beetles | 1 wandering beetle, 1 golden egg | 2 beetles (one follows you), 2 golden eggs |
 | 🏃 **Jumpy Rex** – tap to jump over rocks, logs and bushes, run to the nest | slow, 6 obstacles, an arrow above Rex and a spoken "Jump!" before each one | faster, 9 obstacles, help for the first 2 | fastest, 12 obstacles incl. tall rocks and double rocks |
+| 🥥 **Coconut Pop** – Rex shoots a vine up; big coconuts split into smaller ones until they pop | 1 big coconut, slow | 1 giant coconut | 2 coconuts, faster |
 | 👗 **Dress the dino** *(free play)* | choose a dinosaur, colour, hat, crown, sunglasses, bow tie, flower, then take a photo 📷 | | |
 | 🎵 **Dino sounds** *(free play)* | each dinosaur has its own voice; 🎵 starts a dance party | | |
 
 In Hungry Dino, steer with a swipe, a tap beside the dino, the arrow buttons or the keyboard. A golden egg puts the beetles to sleep. Bumping into an awake beetle just sends the dino back to the start, so there is no game over. The maze uses fewer, bigger squares on small screens.
 In Jumpy Rex, tap anywhere on the scene to jump (on a computer: Space, ↑ or Enter). Hitting an obstacle only makes Rex stumble and slow down for a moment; every run reaches the nest.
+In Coconut Pop, tap where Rex should go: he walks there and shoots his vine (drag to steer; on a computer ← → to walk and Space to shoot). A coconut landing on his head is just a funny bonk.
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
 
@@ -82,7 +84,7 @@ index.html
 css/style.css
 js/core/   art.js  art-extra.js  i18n.js  store.js  speech.js  sound.js  app.js
 js/games/  one file per game (memory, maze, puzzle, fossil, eggs, shadow, odd, size,
-           pattern, feed, dots, color, chomp, run, build, sounds)
+           pattern, feed, dots, color, chomp, run, coco, build, sounds)
 photos/    photos.js  (+ your pictures)
 ```
 
