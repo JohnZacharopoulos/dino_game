@@ -95,6 +95,8 @@ window.Dino = window.Dino || {};
       tone(392, 0.35, { type: 'square', vol: 0.07, when: 0.3 }); tone(494, 0.35, { type: 'square', vol: 0.07, when: 0.3 });
     },
     shutter: function () { noise(0.05, { freq: 3000, q: 0.7, vol: 0.3 }); noise(0.07, { freq: 2000, q: 0.7, vol: 0.25, when: 0.09 }); },
+    jump: function () { tone(300, 0.18, { type: 'triangle', vol: 0.16, slide: 760 }); },
+    land: function () { tone(140, 0.06, { type: 'sine', vol: 0.12 }); },
     chomp: function () { tone(330, 0.06, { type: 'triangle', vol: 0.14, slide: 520 }); tone(520, 0.05, { type: 'triangle', vol: 0.1, when: 0.06, slide: 300 }); },
     sparkle: function () { [1047, 1319, 1568, 2093].forEach(function (f, i) { tone(f, 0.15, { type: 'sine', vol: 0.12, when: i * 0.07 }); }); },
     paint: function () { tone(500 + Math.random() * 300, 0.12, { type: 'sine', vol: 0.15, slide: 1200 }); },
