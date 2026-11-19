@@ -1,15 +1,25 @@
 # 🦖 Δεινο-Παιχνίδια / Dino Games
 
-Five dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
+Fourteen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
 **No installation, no internet, no server:** copy the folder anywhere and double-click `index.html`.
+On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to Home Screen**.
 
 | Game | Easy | Medium | Hard |
 |---|---|---|---|
 | 🃏 **Memory cards** – find the pairs | 3 pairs, cards shown first | 4 pairs, shorter preview | 6 pairs |
 | 🧭 **Maze** – take the dino to its nest | 3×3, footprint trail shows the way | 5×5, hint after 3 bumps | 7×7, hint after 5 bumps |
-| 🧩 **Puzzle** – put the pieces in place | 4 pieces + picture hint | 6 pieces + faint hint | 9 pieces, small reference picture |
+| 🧩 **Puzzle** – put the pieces in place | 4 pieces + picture hint | 6 pieces + faint hint | 9 pieces, tap 👁 to peek at the picture |
 | 🦴 **Fossil dig** – rub the sand away | 1 big fossil in the middle | 1 fossil hidden anywhere | 2 smaller fossils |
 | 🥚 **Count the eggs** – how many? | 1–3 eggs | 2–5 eggs | 4–10 eggs |
+| 🌑 **Shadow match** – whose shadow? | 2 choices | 3 choices | 4 choices, shadow may face the other way |
+| 🔍 **Odd one out** – which is different? | a different dinosaur | same dinosaur, different colour | same dinosaur facing the other way |
+| 📏 **Big & small** | big or small (2) | biggest or smallest (3) | tap 4 in order, smallest → biggest |
+| 🚂 **Pattern train** – what comes next? | A B A B ? | A A B, A B B patterns | A B C, A A B B patterns |
+| 🍎 **Feed the dino** – colours | "something red!" (3 foods) | 5 foods | "give me 3 yellow ones!" |
+| ✏️ **Connect the dots** | 5 dots, next one glows | 8 dots, glow after 5 s | 10 dots |
+| 🎨 **Colouring** | 4 colours | 6 colours | 8 colours + background to paint |
+| 👗 **Dress the dino** *(free play)* | choose a dinosaur, colour, hat, crown, sunglasses, bow tie, flower, then take a photo 📷 | | |
+| 🎵 **Dino sounds** *(free play)* | each dinosaur has its own voice; 🎵 starts a dance party | | |
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
 
@@ -65,14 +75,15 @@ Plain HTML, CSS and JavaScript, with no frameworks, no build step and no depende
 ```
 index.html
 css/style.css
-js/core/   art.js  i18n.js  store.js  speech.js  sound.js  app.js
-js/games/  memory.js  maze.js  puzzle.js  fossil.js  eggs.js
+js/core/   art.js  art-extra.js  i18n.js  store.js  speech.js  sound.js  app.js
+js/games/  one file per game (memory, maze, puzzle, fossil, eggs, shadow, odd, size,
+           pattern, feed, dots, color, build, sounds)
 photos/    photos.js  (+ your pictures)
 ```
 
 ### Adding a game
 
-Create `js/games/<id>.js` with `Dino.games.<id> = { id, color, dark, start(ctx) }`, add the script tag to
+Create `js/games/<id>.js` with `Dino.games.<id> = { id, color, dark, start(ctx) }` (add `free: true` for a game without levels), add the script tag to
 `index.html`, add `<id>` to `GAME_ORDER` in `app.js`, a tile picture in `art.js` (`TILES`) and its texts
 (`g_<id>`, instructions) in `i18n.js`. `ctx` gives you the stage element, `ctx.level`, speech, sounds,
 auto-cleaned timers and listeners (`ctx.timeout`, `ctx.on`), `ctx.progress(done, total)` and `ctx.complete()`.

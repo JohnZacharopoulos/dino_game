@@ -8,7 +8,8 @@ window.Dino = window.Dino || {};
   'use strict';
 
   D.games = D.games || {};
-  var GAME_ORDER = ['memory', 'maze', 'puzzle', 'fossil', 'eggs'];
+  var GAME_ORDER = ['memory', 'maze', 'puzzle', 'fossil', 'eggs', 'shadow', 'odd', 'size',
+                    'pattern', 'feed', 'dots', 'color', 'build', 'sounds'];
   var LEVELS = ['easy', 'medium', 'hard'];
   var app, current = null;
   var A = D.art, I = D.i18n, ICON = D.art.ICONS;
@@ -149,14 +150,31 @@ window.Dino = window.Dino || {};
       if (!g) return;
       var tile = h('<button class="tile" style="--c:' + g.color + ';--d:' + g.dark + ';animation-delay:' + (i * 70) + 'ms">' +
         '<div class="tile-pic">' + A.TILES[id] + '</div>' +
-        '<div class="tile-name">' + esc(I.raw('g_' + id)) + '</div>' + starsHtml(id) + '</button>');
-      onTap(tile, function () { D.sfx.tap(); showLevels(id); });
+        '<div class="tile-name">' + esc(I.raw('g_' + id)) + '</div>' + (g.free ? '<div class="stars free">' + ICON.music.replace('class="icon"', 'class="icon star"') + '</div>' : starsHtml(id)) + '</button>');
+      onTap(tile, function () { D.sfx.tap(); if (g.free) startGame(id, 'free'); else showLevels(id); });
       tiles.appendChild(tile);
     });
     wireTopRight(node, function () { showHome(false); });
     setScreen(node);
+    fitTiles(tiles);
     if (greet) D.speech.say(t('hello'));
   }
+
+  /* Make all game tiles fit on screen (biggest size that fits; scroll only on tiny screens). */
+  function fitTiles(box) {
+    var n = box.children.length;
+    if (!n) return;
+    var W = box.clientWidth - 24, H = box.clientHeight - 24, gap = (W < 500 || H < 420) ? 10 : 18, best = 0;
+    for (var cols = 1; cols <= n; cols++) {
+      var rows = Math.ceil(n / cols);
+      var w = Math.min((W - gap * (cols - 1)) / cols, ((H - gap * (rows - 1)) / rows) / 1.18);
+      if (w > best) best = w;
+    }
+    best = Math.max(W < 500 ? 140 : H < 420 ? 90 : 118, Math.min(best, 210));
+    box.style.setProperty('--tw', Math.floor(best) + 'px');
+    box.style.gap = gap + 'px';
+  }
+  window.addEventListener('resize', function () { var b = document.querySelector('.home .tiles'); if (b) fitTiles(b); });
 
   /* ---------- level choice ---------- */
   function showLevels(id) {
@@ -187,7 +205,7 @@ window.Dino = window.Dino || {};
     var node = h('<section class="screen game game-' + id + '" style="--c:' + g.color + ';--d:' + g.dark + '">' +
       '<header class="topbar">' +
       '<button class="icon-btn home-btn" aria-label="home">' + ICON.home + '</button>' +
-      '<div class="progress"></div>' +
+      '<div class="progress' + (g.free ? ' hidden' : '') + '"></div>' +
       '<button class="icon-btn say-btn" aria-label="repeat">' + ICON.speaker + '</button>' +
       '</header><div class="stage"></div></section>');
     setScreen(node);
@@ -213,6 +231,7 @@ window.Dino = window.Dino || {};
       say: function (text, opts) { D.speech.say(text, opts); },
       t: t,
       instruct: function (key, vars) { instruction = t(key, vars); D.speech.say(instruction); },
+      instructText: function (text) { instruction = text; D.speech.say(instruction); },
       praise: function (el) { D.speech.say(t('praise')); if (el) burst(el); },
       tryAgain: function () { D.speech.say(t('tryAgain')); },
       burst: burst,

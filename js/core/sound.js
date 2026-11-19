@@ -87,6 +87,53 @@ window.Dino = window.Dino || {};
       noise(0.9, { filter: 'lowpass', freq: 900, slide: 200, q: 2, vol: 0.32 });
       tone(140, 0.8, { type: 'sawtooth', vol: 0.08, slide: 70 });
     },
+    munch: function () {
+      for (var i = 0; i < 3; i++) noise(0.08, { freq: 900, q: 1.5, vol: 0.25, when: i * 0.16 });
+    },
+    toot: function () {
+      tone(392, 0.25, { type: 'square', vol: 0.07 }); tone(494, 0.25, { type: 'square', vol: 0.07 });
+      tone(392, 0.35, { type: 'square', vol: 0.07, when: 0.3 }); tone(494, 0.35, { type: 'square', vol: 0.07, when: 0.3 });
+    },
+    shutter: function () { noise(0.05, { freq: 3000, q: 0.7, vol: 0.3 }); noise(0.07, { freq: 2000, q: 0.7, vol: 0.25, when: 0.09 }); },
+    paint: function () { tone(500 + Math.random() * 300, 0.12, { type: 'sine', vol: 0.15, slide: 1200 }); },
+    /* A different voice for each dinosaur. */
+    voice: function (type) {
+      switch (type) {
+        case 'trex': this.roar(); break;
+        case 'bronto':
+          tone(130, 0.7, { type: 'sine', vol: 0.3, slide: 95 });
+          tone(196, 0.6, { type: 'triangle', vol: 0.1, slide: 140, when: 0.05 });
+          tone(110, 0.8, { type: 'sine', vol: 0.3, slide: 80, when: 0.75 });
+          break;
+        case 'trice':
+          noise(0.18, { filter: 'lowpass', freq: 500, q: 4, vol: 0.4 });
+          noise(0.25, { filter: 'lowpass', freq: 420, q: 4, vol: 0.4, when: 0.25 });
+          tone(90, 0.4, { type: 'sawtooth', vol: 0.08, when: 0.25 });
+          break;
+        case 'stego':
+          tone(233, 0.22, { type: 'square', vol: 0.09, slide: 207 });
+          tone(233, 0.32, { type: 'square', vol: 0.09, slide: 196, when: 0.28 });
+          break;
+        case 'ptero':
+          for (var i = 0; i < 3; i++) tone(900, 0.13, { type: 'sawtooth', vol: 0.07, slide: 1500, when: i * 0.17 });
+          break;
+        case 'ankylo':
+          for (var j = 0; j < 3; j++) { tone(70, 0.22, { type: 'sine', vol: 0.45, slide: 40, when: j * 0.28 }); noise(0.1, { filter: 'lowpass', freq: 300, vol: 0.3, when: j * 0.28 }); }
+          break;
+      }
+    },
+    /* A short original tune for the dino dance party. */
+    tune: function () {
+      var notes = [523, 659, 784, 659, 587, 698, 880, 698, 659, 784, 988, 784, 1047, 784, 1047];
+      var lens = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 3];
+      var t = 0;
+      notes.forEach(function (f, i) {
+        tone(f, 0.2 * lens[i], { type: 'triangle', vol: 0.13, when: t });
+        if (i % 2 === 0) tone(f / 4, 0.18, { type: 'sine', vol: 0.18, when: t });
+        t += 0.2 * lens[i];
+      });
+      return t;
+    },
     fanfare: function () {
       [523, 659, 784, 1047].forEach(function (f, i) { tone(f, 0.22, { type: 'triangle', vol: 0.16, when: i * 0.12 }); });
       tone(1047, 0.6, { type: 'triangle', vol: 0.14, when: 0.5 });

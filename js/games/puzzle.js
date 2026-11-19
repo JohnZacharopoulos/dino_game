@@ -13,7 +13,7 @@ Dino.games.puzzle = {
       hard:   { cols: 3, rows: 3, ghost: 0,    rounds: 3 }
     }[ctx.level];
     var A = ctx.art, stage = ctx.stage;
-    var round = 0, img, board, tray, wrap, slots, pieces, placed, selected, B, pw, ph, traySize, busy;
+    var round = 0, img, board, tray, wrap, slots, pieces, placed, selected, B, pw, ph, traySize, busy, peek, peekTimer;
 
     // Picture pool: every built-in scene + parent photos, shuffled.
     var pool = ctx.shuffle(A.DINOS.map(function (type, i) {
@@ -67,39 +67,63 @@ Dino.games.puzzle = {
       order.forEach(function (p) { tray.appendChild(p); });
       wrap.appendChild(board);
       wrap.appendChild(tray);
+      peek = null;
       if (!CFG.ghost) {
-        var ref = ctx.h('<div class="pz-ref"></div>');
-        ref.style.backgroundImage = 'url("' + img.src + '")';
-        stage.appendChild(ref);
+        // Hard level: a small picture in the tray; tapping it shows the whole picture for a moment.
+        peek = ctx.h('<button class="pz-peek" aria-label="peek">' + A.ICONS.eye + '</button>');
+        peek.style.backgroundImage = 'url("' + img.src + '")';
+        tray.insertBefore(peek, tray.firstChild);
+        ctx.on(peek, 'click', function () {
+          if (busy) return;
+          ctx.sfx.tap();
+          ghost.style.opacity = 1;
+          clearTimeout(peekTimer);
+          peekTimer = ctx.timeout(function () { ghost.style.opacity = 0; }, 1800);
+        });
       }
       stage.appendChild(wrap);
       layout();
     }
 
+    /* How much must tray pieces shrink so n of them (size pw x ph) fit in tw x th? */
+    function fitK(pwc, phc, tw, th, n) {
+      var tgap = 10;
+      for (var k = 1; k > 0.2; k -= 0.03) {
+        var perRow = Math.floor((tw + tgap) / (pwc * k + tgap));
+        if (perRow >= 1 && Math.ceil(n / perRow) * (phc * k + tgap) <= th + tgap) return k;
+      }
+      return 0.2;
+    }
+
     function layout() {
-      var W = stage.clientWidth, H = stage.clientHeight, n = pieces.length;
-      var landscape = W >= H * 1.1;
+      var W = stage.clientWidth, H = stage.clientHeight, n = pieces.length + (peek ? 1 : 0);
+      var landscape = W >= H;
       wrap.style.flexDirection = landscape ? 'row' : 'column';
-      var gap = 20;
-      // Board takes ~58% of the long side; tray the rest.
-      B = Math.floor(Math.min(landscape ? Math.min(H - 16, (W - gap) * 0.58) : Math.min(W - 16, (H - gap) * 0.56), 640));
+      var gap = 14, best = null;
+      // Try different board sizes; keep the one where both board and tray pieces stay large.
+      for (var f = 0.36; f <= 0.8; f += 0.02) {
+        var b = Math.floor(Math.min(landscape ? Math.min(H - 4, (W - gap) * f) : Math.min(W - 4, (H - gap) * f), 640));
+        var tw = landscape ? W - b - gap - 4 : W - 4, th = landscape ? H - 4 : H - b - gap - 4;
+        if (tw < 40 || th < 40) continue;
+        var pwc = b / CFG.cols, phc = b / CFG.rows;
+        var k = fitK(pwc, phc, tw, th, n);
+        var score = Math.min(pwc, pwc * k / 0.8);
+        if (!best || score > best.score + 0.5) best = { b: b, k: k, tw: tw, th: th, score: score };
+      }
+      B = best.b; traySize = best.k;
       pw = B / CFG.cols; ph = B / CFG.rows;
       board.style.width = board.style.height = B + 'px';
       slots.forEach(function (s) {
         s.style.left = s._c * pw + 'px'; s.style.top = s._r * ph + 'px';
         s.style.width = pw + 'px'; s.style.height = ph + 'px';
       });
-      // Tray: find a scale so all loose pieces fit.
-      var tw = landscape ? W - B - gap - 8 : W - 8, th = landscape ? H - 8 : H - B - gap - 8;
-      tray.style.width = tw + 'px'; tray.style.height = th + 'px';
-      var k = 1, tgap = 12;
-      for (; k > 0.2; k -= 0.04) {
-        var w = pw * k + tgap, h = ph * k + tgap;
-        var perRow = Math.floor((tw + tgap) / w), rowsNeeded = Math.ceil(n / Math.max(1, perRow));
-        if (perRow >= 1 && rowsNeeded * h <= th + tgap) break;
-      }
-      traySize = k;
-      pieces.forEach(function (p) { sizePiece(p, p.classList.contains('placed') ? 1 : k); if (p.classList.contains('placed')) placeAt(p); });
+      tray.style.width = best.tw + 'px'; tray.style.height = best.th + 'px';
+      if (peek) { peek.style.width = pw * traySize + 'px'; peek.style.height = ph * traySize + 'px'; }
+      pieces.forEach(function (p) {
+        var isPlaced = p.classList.contains('placed');
+        sizePiece(p, isPlaced ? 1 : traySize);
+        if (isPlaced) placeAt(p);
+      });
     }
     ctx.onResize(function () { if (board) layout(); });
 

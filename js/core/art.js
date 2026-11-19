@@ -15,20 +15,31 @@ window.Dino = window.Dino || {};
   };
 
   var FOSSIL = { b: '#f3e9d0', d: '#8b7048', l: '#e7d8b4', a: '#dcc8a0', h: '#f7efdc',
-                 w: '#e7d8b4', p: '#8b7048', k: 'none', fossil: true };
+                 w: '#e7d8b4', p: '#8b7048', k: 'none', flat: true };
 
+  var SHADOW = { b: '#2f3542', d: '#2f3542', l: '#2f3542', a: '#2f3542', h: '#2f3542',
+                 w: '#2f3542', p: '#2f3542', k: 'none', flat: true };
+  /* "paint" = colouring-book outline: placeholder fills that the colouring game recognises. */
+  var PAINT = { b: '#fffff1', a: '#fffff2', l: '#fffff3', h: '#fffff4', d: '#3a3a3a',
+                w: '#ffffff', p: '#222222', k: 'none' };
+
+  /* mode: undefined (normal colours), 'fossil', 'shadow', 'paint',
+     or an object with any of {b, d, l, a, h} to recolour the dino. */
   function pal(type, mode) {
     if (mode === 'fossil') return FOSSIL;
+    if (mode === 'shadow') return SHADOW;
+    if (mode === 'paint') return PAINT;
     var c = {}, k;
     for (k in COMMON) c[k] = COMMON[k];
     for (k in PAL[type]) c[k] = PAL[type][k];
+    if (mode && typeof mode === 'object') for (k in mode) c[k] = mode[k];
     return c;
   }
 
   function eye(c, x, y, r) {
     var s = '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + c.w + '" stroke-width="3"/>' +
       '<circle cx="' + (x + r * 0.25) + '" cy="' + (y + r * 0.1) + '" r="' + (r * 0.58) + '" fill="' + c.p + '" stroke="none"/>';
-    if (!c.fossil) s += '<circle cx="' + (x + r * 0.45) + '" cy="' + (y - r * 0.22) + '" r="' + (r * 0.22) + '" fill="#fff" stroke="none"/>';
+    if (!c.flat) s += '<circle cx="' + (x + r * 0.45) + '" cy="' + (y - r * 0.22) + '" r="' + (r * 0.22) + '" fill="#fff" stroke="none"/>';
     return s;
   }
   function cheek(c, x, y) {
@@ -262,7 +273,10 @@ window.Dino = window.Dino || {};
     up: ic('<path d="M32 12 L56 48 H8 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
     down: ic('<path d="M32 52 L56 16 H8 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
     left: ic('<path d="M12 32 L48 8 V56 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
-    right: ic('<path d="M52 32 L16 8 V56 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>')
+    right: ic('<path d="M52 32 L16 8 V56 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
+    eye: ic('<path d="M4 32 C16 12 48 12 60 32 C48 52 16 52 4 32 Z" fill="#fff" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><circle cx="32" cy="32" r="10" fill="currentColor"/>'),
+    camera: ic('<rect x="6" y="18" width="52" height="38" rx="8" fill="currentColor"/><path d="M22 18 L26 10 H38 L42 18 Z" fill="currentColor"/><circle cx="32" cy="37" r="12" fill="#fff"/><circle cx="32" cy="37" r="7" fill="currentColor"/>'),
+    music: ic('<path d="M24 46 V12 L54 6 V40" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><ellipse cx="17" cy="47" rx="9" ry="7" fill="currentColor"/><ellipse cx="47" cy="41" rx="9" ry="7" fill="currentColor"/>')
   };
 
   /* ---------- game tile pictures ---------- */
@@ -302,7 +316,7 @@ window.Dino = window.Dino || {};
   };
 
   D.art = {
-    DINOS: DINOS, EGG_COLORS: EGG_COLORS, ICONS: ICONS, TILES: TILES, FLAGS: FLAGS,
+    PAL: PAL, EGG_PATH: EGG_PATH, DINOS: DINOS, EGG_COLORS: EGG_COLORS, ICONS: ICONS, TILES: TILES, FLAGS: FLAGS,
     dino: dino, dinoInner: dinoInner, egg: egg, hatched: hatched, nest: nest,
     footprint: footprint, scene: scene, sceneCount: SCENES.length, dataUri: dataUri
   };
