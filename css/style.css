@@ -246,11 +246,10 @@ svg { display: block; }
 .run-track .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--c); }
 .run-track .me { position: absolute; top: -14px; width: 36px; height: 34px; margin-left: -18px; }
 .run-track .goal { position: absolute; right: -20px; top: -16px; width: 40px; height: 32px; }
-.run-jump { position: relative; flex: none; z-index: 7; width: 100px; height: 100px;
-  border-radius: 50%; background: var(--c); color: #fff; padding: 24px; box-shadow: 0 7px 0 var(--d); border: 5px solid #fff; }
-.run-jump:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--d); }
-.run-jump.hint { animation: jumpHint .5s ease-in-out infinite; }
-@keyframes jumpHint { 50% { transform: scale(1.15); box-shadow: 0 7px 0 var(--d), 0 0 0 10px rgba(255,255,255,.6); } }
+.run-tap { position: absolute; left: 50%; bottom: 100%; width: 46%; aspect-ratio: 1; margin-left: -23%; padding: 8%; border-radius: 50%;
+  background: #fff; color: var(--c); box-shadow: 0 4px 0 var(--shadow); opacity: 0; transition: opacity .15s; pointer-events: none; }
+.run-tap.show { opacity: 1; animation: tapBounce .45s ease-in-out infinite; }
+@keyframes tapBounce { 50% { transform: translateY(-30%); } }
 
 /* ====== Hungry Dino ====== */
 .maze-board.chomp-board { background: #c9eeb0; box-shadow: 0 8px 0 rgba(46,125,50,.35); }

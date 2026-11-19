@@ -38,7 +38,7 @@ Dino.games = Dino.games || {};
       }[ctx.level];
       var GRAV = 15, JUMP_V = 6.1; // apex ≈ 1.24 u, air time ≈ 0.8 s
       var stage = ctx.stage, round = 0, gen = 0;
-      var wrap, world, dinoEl, dinoBody, hills, ground, jumpBtn, trackFill, trackMe, finishEl;
+      var wrap, world, dinoEl, dinoBody, hills, ground, tapHint, trackFill, trackMe, finishEl;
       var u, Wd, dinoX, course, stars, finishD, dist, y, vy, onGround, buffered, speedMul, invuln, running, last, hinted;
 
       // read-only snapshot used by the automated tests
@@ -52,10 +52,8 @@ Dino.games = Dino.games || {};
         stage.innerHTML = '';
         world = ctx.h('<div class="run-world"><div class="run-sun"></div><div class="run-hills"></div><div class="run-ground"></div>' +
           '<div class="run-track"><div class="fill"></div><div class="goal">' + A.nest() + '</div><div class="me">' + A.dino('trex') + '</div></div></div>');
-        // The jump button lives OUTSIDE the scene (below it in portrait, beside it in landscape),
-        // so it never hides the obstacles that are coming.
+        // No on-screen button: tapping anywhere on the scene jumps (Space / ↑ / Enter on a keyboard).
         wrap = ctx.h('<div class="run-wrap"></div>');
-        jumpBtn = ctx.h('<button class="run-jump" aria-label="jump">' + A.ICONS.up + '</button>');
         hills = world.querySelector('.run-hills');
         hills.style.backgroundImage = 'url("' + HILLS + '")';
         ground = world.querySelector('.run-ground');
@@ -70,6 +68,9 @@ Dino.games = Dino.games || {};
         }
         dinoEl = ctx.h('<div class="run-ent run-dino"><div class="body">' + A.dino('trex') + '</div></div>');
         dinoBody = dinoEl.firstChild;
+        // the "jump now!" hint: a little bouncing arrow above Rex's head
+        tapHint = ctx.h('<div class="run-tap">' + A.ICONS.up + '</div>');
+        dinoEl.appendChild(tapHint);
         world.appendChild(dinoEl);
 
         // build the course
@@ -87,7 +88,6 @@ Dino.games = Dino.games || {};
         world.appendChild(finishEl);
 
         wrap.appendChild(world);
-        wrap.appendChild(jumpBtn);
         stage.appendChild(wrap);
         dist = 0; y = 0; vy = 0; onGround = true; buffered = 0; speedMul = 1; invuln = 0; running = true; hinted = 0;
         layout();
@@ -111,19 +111,10 @@ Dino.games = Dino.games || {};
 
       function layout() {
         if (!world) return;
-        var SW = stage.clientWidth, SH = stage.clientHeight, portrait = SH > SW;
-        var b = Math.round(Math.max(80, Math.min(124, Math.min(SW, SH) * 0.24)));
-        jumpBtn.style.width = jumpBtn.style.height = b + 'px';
-        jumpBtn.style.padding = Math.round(b * 0.24) + 'px';
-        wrap.style.flexDirection = portrait ? 'column' : 'row';
-        if (portrait) {
-          // scene on top (not taller than it is wide, so Rex stays big), button underneath
-          world.style.width = '100%';
-          world.style.height = Math.min(SH - b - 24, SW * 0.95) + 'px';
-          world.style.flex = 'none';
-        } else {
-          world.style.width = ''; world.style.height = '100%'; world.style.flex = '1';
-        }
+        var SW = stage.clientWidth, SH = stage.clientHeight;
+        // the scene fills the whole area, but in portrait it is not taller than it is wide (so Rex stays big)
+        world.style.width = '100%';
+        world.style.height = Math.min(SH, SW * 0.95) + 'px';
         Wd = world.clientWidth;
         var Hd = world.clientHeight;
         u = Math.min(Hd * 0.3, Wd * 0.2);
@@ -233,7 +224,7 @@ Dino.games = Dino.games || {};
         var next = null;
         for (var i = 0; i < course.length; i++) if (!course[i].knocked && course[i].d - dist > 0.4) { next = course[i]; break; }
         var show = next && hinted < CFG.hints && (next.d - dist) / CFG.speed < 0.75;
-        jumpBtn.classList.toggle('hint', !!show && onGround);
+        tapHint.classList.toggle('show', !!show && onGround);
         if (show && next._hinted !== true) {
           next._hinted = true; hinted++;
           ctx.say(ctx.t('run_jump'), { noCaption: true, rate: 1.1 });
@@ -249,7 +240,7 @@ Dino.games = Dino.games || {};
 
       function finish() {
         running = false;
-        jumpBtn.classList.remove('hint');
+        tapHint.classList.remove('show');
         dinoBody.classList.add('dance');
         ctx.sfx.roar();
         ctx.say(ctx.t('run_finish') + ' ' + ctx.t('praise'));
@@ -266,7 +257,10 @@ Dino.games = Dino.games || {};
         doJump(performance.now());
       });
       ctx.on(window, 'keydown', function (e) {
-        if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'Enter') { e.preventDefault(); doJump(performance.now()); }
+        if (e.key === ' ' || e.code === 'Space' || e.key === 'Spacebar' || e.key === 'ArrowUp' || e.key === 'Enter') {
+          e.preventDefault();
+          if (!e.repeat) doJump(performance.now()); // holding Space down doesn't bounce forever
+        }
       });
     }
   };

@@ -19,12 +19,12 @@ On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to 
 | ✏️ **Connect the dots** | 5 dots, next one glows | 8 dots, glow after 5 s | 10 dots |
 | 🎨 **Colouring** | 4 colours | 6 colours | 8 colours + background to paint |
 | 🌿 **Hungry Dino** – eat all the leaves in the garden maze | small maze, no beetles | 1 wandering beetle, 1 golden egg | 2 beetles (one follows you), 2 golden eggs |
-| 🏃 **Jumpy Rex** – tap to jump over rocks, logs and bushes, run to the nest | slow, 6 obstacles, the button flashes and says "Jump!" | faster, 9 obstacles, help for the first 2 | fastest, 12 obstacles incl. tall rocks and double rocks |
+| 🏃 **Jumpy Rex** – tap to jump over rocks, logs and bushes, run to the nest | slow, 6 obstacles, an arrow above Rex and a spoken "Jump!" before each one | faster, 9 obstacles, help for the first 2 | fastest, 12 obstacles incl. tall rocks and double rocks |
 | 👗 **Dress the dino** *(free play)* | choose a dinosaur, colour, hat, crown, sunglasses, bow tie, flower, then take a photo 📷 | | |
 | 🎵 **Dino sounds** *(free play)* | each dinosaur has its own voice; 🎵 starts a dance party | | |
 
 In Hungry Dino, steer with a swipe, a tap beside the dino, the arrow buttons or the keyboard. A golden egg puts the beetles to sleep. Bumping into an awake beetle just sends the dino back to the start, so there is no game over. The maze uses fewer, bigger squares on small screens.
-In Jumpy Rex, tap anywhere, the big ⬆ button, the space bar or the up arrow to jump. Hitting an obstacle only makes Rex stumble and slow down for a moment; every run reaches the nest.
+In Jumpy Rex, tap anywhere on the scene to jump (on a computer: Space, ↑ or Enter). Hitting an obstacle only makes Rex stumble and slow down for a moment; every run reaches the nest.
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
 
