@@ -38,7 +38,7 @@ Dino.games = Dino.games || {};
       }[ctx.level];
       var GRAV = 15, JUMP_V = 6.1; // apex ≈ 1.24 u, air time ≈ 0.8 s
       var stage = ctx.stage, round = 0, gen = 0;
-      var world, dinoEl, dinoBody, hills, ground, jumpBtn, trackFill, trackMe, finishEl;
+      var wrap, world, dinoEl, dinoBody, hills, ground, jumpBtn, trackFill, trackMe, finishEl;
       var u, Wd, dinoX, course, stars, finishD, dist, y, vy, onGround, buffered, speedMul, invuln, running, last, hinted;
 
       // read-only snapshot used by the automated tests
@@ -51,12 +51,14 @@ Dino.games = Dino.games || {};
         gen++;
         stage.innerHTML = '';
         world = ctx.h('<div class="run-world"><div class="run-sun"></div><div class="run-hills"></div><div class="run-ground"></div>' +
-          '<div class="run-track"><div class="fill"></div><div class="goal">' + A.nest() + '</div><div class="me">' + A.dino('trex') + '</div></div>' +
-          '<button class="run-jump" aria-label="jump">' + A.ICONS.up + '</button></div>');
+          '<div class="run-track"><div class="fill"></div><div class="goal">' + A.nest() + '</div><div class="me">' + A.dino('trex') + '</div></div></div>');
+        // The jump button lives OUTSIDE the scene (below it in portrait, beside it in landscape),
+        // so it never hides the obstacles that are coming.
+        wrap = ctx.h('<div class="run-wrap"></div>');
+        jumpBtn = ctx.h('<button class="run-jump" aria-label="jump">' + A.ICONS.up + '</button>');
         hills = world.querySelector('.run-hills');
         hills.style.backgroundImage = 'url("' + HILLS + '")';
         ground = world.querySelector('.run-ground');
-        jumpBtn = world.querySelector('.run-jump');
         trackFill = world.querySelector('.run-track .fill');
         trackMe = world.querySelector('.run-track .me');
         for (var c = 0; c < 3; c++) {
@@ -84,7 +86,9 @@ Dino.games = Dino.games || {};
         finishEl = ctx.h('<div class="run-ent run-finish">' + A.nest() + '</div>');
         world.appendChild(finishEl);
 
-        stage.appendChild(world);
+        wrap.appendChild(world);
+        wrap.appendChild(jumpBtn);
+        stage.appendChild(wrap);
         dist = 0; y = 0; vy = 0; onGround = true; buffered = 0; speedMul = 1; invuln = 0; running = true; hinted = 0;
         layout();
         ctx.instruct('run_inst');
@@ -107,9 +111,19 @@ Dino.games = Dino.games || {};
 
       function layout() {
         if (!world) return;
-        // in portrait, don't stretch into a tall empty sky: keep the scene wide and sitting at the bottom
-        var SW = stage.clientWidth, SH = stage.clientHeight;
-        world.style.top = SH > SW * 0.9 ? Math.max(0, SH - SW * 0.9) + 'px' : '';
+        var SW = stage.clientWidth, SH = stage.clientHeight, portrait = SH > SW;
+        var b = Math.round(Math.max(80, Math.min(124, Math.min(SW, SH) * 0.24)));
+        jumpBtn.style.width = jumpBtn.style.height = b + 'px';
+        jumpBtn.style.padding = Math.round(b * 0.24) + 'px';
+        wrap.style.flexDirection = portrait ? 'column' : 'row';
+        if (portrait) {
+          // scene on top (not taller than it is wide, so Rex stays big), button underneath
+          world.style.width = '100%';
+          world.style.height = Math.min(SH - b - 24, SW * 0.95) + 'px';
+          world.style.flex = 'none';
+        } else {
+          world.style.width = ''; world.style.height = '100%'; world.style.flex = '1';
+        }
         Wd = world.clientWidth;
         var Hd = world.clientHeight;
         u = Math.min(Hd * 0.3, Wd * 0.2);
@@ -247,7 +261,7 @@ Dino.games = Dino.games || {};
 
       // input: tap anywhere on the world, the big button, space / arrow up
       ctx.on(stage, 'pointerdown', function (e) {
-        if (!world || !world.contains(e.target)) return;
+        if (!wrap || !wrap.contains(e.target)) return;
         e.preventDefault();
         doJump(performance.now());
       });
