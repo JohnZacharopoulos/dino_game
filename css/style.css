@@ -326,6 +326,35 @@ svg { display: block; }
   .math-ans { height: clamp(52px, 17vh, 80px); }
 }
 
+/* ====== Rex on the Trail ====== */
+.dodge-world { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); border-radius: 26px; overflow: hidden; touch-action: none; cursor: pointer;
+  background-color: #6dbb4a; box-shadow: 0 8px 0 var(--shadow); }
+.dodge-path { position: absolute; top: 0; bottom: 0; left: 9%; right: 9%; background-color: #e8c98a;
+  background-image: radial-gradient(circle at 20% 30%, #d4ae6a 0 5px, transparent 6px), radial-gradient(circle at 70% 70%, #d4ae6a 0 4px, transparent 5px),
+    radial-gradient(circle at 45% 85%, #f3dcaa 0 6px, transparent 7px);
+  background-size: 160px 160px; box-shadow: inset 8px 0 0 #c9a467, inset -8px 0 0 #c9a467; }
+.dodge-edge { position: absolute; top: 0; bottom: 0; width: 9%;
+  background-image: radial-gradient(circle at 50% 30%, #4f9a33 0 12px, transparent 13px), radial-gradient(circle at 30% 80%, #5aa83f 0 9px, transparent 10px);
+  background-size: 100% 120px; }
+.dodge-edge.l { left: 0; } .dodge-edge.r { right: 0; }
+.dodge-ent { position: absolute; left: 0; top: 0; will-change: transform; }
+.dodge-ent svg { display: block; width: 100%; height: 100%; }
+.dodge-rex { z-index: 5; }
+.dodge-rex .body { width: 100%; height: 100%; transform-origin: 50% 90%; }
+.dodge-rex.left .flip { transform: scaleX(-1); }
+.dodge-rex .flip { width: 100%; height: 100%; transition: transform .12s; }
+.dodge-rex.hit .body { animation: wobble .5s; }
+.dodge-rex.blink { animation: blink .2s 5; }
+.dodge-obs { z-index: 4; }
+.dodge-obs.knocked { transition: transform .6s ease-out, opacity .6s; opacity: 0; }
+.dodge-star { z-index: 4; color: var(--star); filter: drop-shadow(0 2px 0 #c58b00); }
+.dodge-deco { z-index: 3; }
+.dodge-finish { z-index: 3; }
+.dodge-hint { position: absolute; z-index: 6; width: 54px; height: 54px; padding: 8px; border-radius: 50%; background: #fff; color: var(--d);
+  box-shadow: 0 4px 0 var(--shadow); opacity: 0; transition: opacity .15s; pointer-events: none; }
+.dodge-hint.show { opacity: 1; animation: hintSide .45s ease-in-out infinite; }
+@keyframes hintSide { 50% { margin-left: var(--hx, 10px); } }
+
 /* ====== Coconut Pop ====== */
 .coco-world { position: absolute; inset: 0; border-radius: 26px; overflow: hidden; touch-action: none; cursor: pointer;
   background: linear-gradient(180deg, #7fd3ff 0%, #c7ecff 62%, #3fb6d9 62%, #69cbe6 72%, #f3d98f 72%);
