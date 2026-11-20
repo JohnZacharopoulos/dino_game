@@ -10,7 +10,7 @@ window.Dino = window.Dino || {};
   D.games = D.games || {};
   var GAME_ORDER = ['memory', 'maze', 'puzzle', 'fossil', 'eggs', 'shadow', 'odd', 'size',
                     'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'coco', 'build', 'sounds',
-                    'math'];
+                    'scene', 'math'];
   // Home-screen categories. A game says which one it belongs to with  cat: 'school'  (default 'play').
   var CATS = [{ id: 'play', icon: 'dino' }, { id: 'school', icon: 'book' }];
   var LEVELS = ['easy', 'medium', 'hard'];
@@ -163,7 +163,11 @@ window.Dino = window.Dino || {};
       });
       tabs.appendChild(b);
     });
-    GAME_ORDER.filter(function (id) { return D.games[id] && (D.games[id].cat || 'play') === cat; }).forEach(function (id, i) {
+    GAME_ORDER.filter(function (id) {
+      var gm = D.games[id];
+      // desktopOnly games (e.g. the scene maker) only appear on big screens with a mouse
+      return gm && (gm.cat || 'play') === cat && (!gm.desktopOnly || bigScreen());
+    }).forEach(function (id, i) {
       var g = D.games[id];
       var tile = h('<button class="tile" style="--c:' + g.color + ';--d:' + g.dark + ';animation-delay:' + (i * 70) + 'ms">' +
         '<div class="tile-pic">' + A.TILES[id] + '</div>' +
@@ -192,6 +196,13 @@ window.Dino = window.Dino || {};
     box.style.gap = gap + 'px';
   }
   window.addEventListener('resize', function () { var b = document.querySelector('.home .tiles'); if (b) fitTiles(b); });
+
+  /* A computer with a mouse/trackpad and a large window (not a phone or tablet). */
+  function bigScreen() {
+    var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    return !!fine && window.innerWidth >= 1000 && window.innerHeight >= 560;
+  }
+  D.bigScreen = bigScreen;
 
   /* A game may define its own list of levels (e.g. school grades); default: easy / medium / hard. */
   function levelsOf(id) { return (D.games[id] && D.games[id].levels) || LEVELS; }

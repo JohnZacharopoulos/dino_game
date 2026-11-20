@@ -1,6 +1,6 @@
 # 🦖 Δεινο-Παιχνίδια / Dino Games
 
-Seventeen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
+Eighteen dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
 **No installation, no internet, no server:** copy the folder anywhere and double-click `index.html`.
 On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to Home Screen**.
 
@@ -21,6 +21,7 @@ On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to 
 | 🌿 **Hungry Dino** – eat all the leaves in the garden maze | small maze, no beetles | 1 wandering beetle, 1 golden egg | 2 beetles (one follows you), 2 golden eggs |
 | 🏃 **Jumpy Rex** – tap to jump over rocks, logs and bushes, run to the nest | slow, 6 obstacles, an arrow above Rex and a spoken "Jump!" before each one | faster, 9 obstacles, help for the first 2 | fastest, 12 obstacles incl. tall rocks and double rocks |
 | 🥥 **Coconut Pop** – Rex shoots a vine up; big coconuts split into smaller ones until they pop | 1 big coconut, slow | 1 giant coconut | 2 coconuts, faster |
+| 🖼️ **Dino Scene Maker** *(free play, computers only)* | pick one of 6 landscapes, then drag dinosaurs, volcanoes, caves, trees, rocks, eggs, sun, moon… into the scene; resize and flip before or after dragging; 📷 saves the picture | | |
 | 👗 **Dress the dino** *(free play)* | choose a dinosaur, colour, hat, crown, sunglasses, bow tie, flower, then take a photo 📷 | | |
 | 🎵 **Dino sounds** *(free play)* | each dinosaur has its own voice; 🎵 starts a dance party | | |
 
@@ -29,6 +30,14 @@ In Jumpy Rex, tap anywhere on the scene to jump (on a computer: Space, ↑ or En
 In Coconut Pop, tap where Rex should go: he walks there and shoots his vine (drag to steer; on a computer ← → to walk and Space to shoot). A coconut landing on his head is just a funny bonk.
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
+
+### 🖼️ Dino Scene Maker (big screens only)
+
+Shown only on a computer with a mouse/trackpad and a window of at least 1000 × 560 (hidden on phones and tablets).
+Click an item on the right to set its **size** (− / slider / +) and **flip** it, then drag it into the scene.
+Click a placed item to change it, drag it to move it, and drag it out of the scene (or press 🗑 / Delete) to remove it.
+The scene is saved automatically in the browser; **📷** downloads it as `dino-scene.png`.
+To make another game desktop-only, give it `desktopOnly: true`.
 
 ## 📚 School category (ages ~7–12)
 
@@ -107,7 +116,7 @@ index.html
 css/style.css
 js/core/   art.js  art-extra.js  i18n.js  store.js  speech.js  sound.js  app.js
 js/games/  one file per game (memory, maze, puzzle, fossil, eggs, shadow, odd, size,
-           pattern, feed, dots, color, chomp, run, coco, build, sounds, math)
+           pattern, feed, dots, color, chomp, run, coco, scene, build, sounds, math)
 photos/    photos.js  (+ your pictures)
 ```
 
