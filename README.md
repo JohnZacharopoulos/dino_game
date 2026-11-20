@@ -30,20 +30,28 @@ In Coconut Pop, tap where Rex should go: he walks there and shoots his vine (dra
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
 
-## 📚 School category (ages ~7–9)
+## 📚 School category (ages ~7–12)
 
 The home screen has two tabs: **🦖 Παιχνίδια / Play** (the games above, for a 4-year-old) and
 **📚 Σχολείο / School**, with educational games for older children following the Greek primary curriculum.
 
-| Game | Β΄ Δημοτικού | Γ΄ Δημοτικού | Γ΄ – Πρόκληση |
-|---|---|---|---|
-| ➗ **Μαθηματικά με τον Ρεξ / Maths with Rex** – 10 multiple-choice questions | + and − within 100, times tables 2·3·4·5·10, half/double, simple word problems | carrying, all tables, division, fractions of a number (½, ⅓, ¼, ¾ of 24…), missing numbers | 3-digit numbers, 2-digit × 1-digit, any fraction n/d of a number, word problems |
+### ➗ Μαθηματικά με τον Ρεξ / Maths with Rex – 10 multiple-choice questions per grade
 
+| Grade | Topics |
+|---|---|
+| **Β΄ Δημοτικού** | + and − within 100, times tables 2·3·4·5·10, half/double, simple word problems |
+| **Γ΄ Δημοτικού** | carrying, all tables, division, fractions of a number (½, ⅓, ¼, ¾ of 24…), missing numbers |
+| **Γ΄ – Πρόκληση** | 3-digit numbers, 2-digit × 1-digit, any fraction n/d of a number, word problems |
+| **Δ΄ Δημοτικού** | 4-digit + and −, 2-digit × 2-digit, division by 1 digit, equivalent fractions (½ = □/8), adding fractions with the same denominator, decimals (2,5 + 1,3), multiples, perimeter, hours → minutes, money |
+| **Ε΄ Δημοτικού** | decimals (+, × , ×10/100/1000, : 10/100), adding fractions with different denominators, simplifying fractions, percentages, order of operations, area of rectangle/triangle, Ε.Κ.Π. / Μ.Κ.Δ., long division |
+| **ΣΤ΄ Δημοτικού** | percentages and discounts, equations (2x + 5 = 17), powers (2⁵), order of operations with brackets, multiplying/dividing fractions, proportion, average, decimal division, circle area/circumference (π = 3,14), speed–distance–time |
+
+Answers can be whole numbers, decimals (with a Greek decimal comma, e.g. 2,5) or fractions (shown stacked).
+Wrong choices are based on common mistakes, and are never equal in value to the right answer (e.g. 2/4 is never offered next to 1/2).
 A wrong answer can be tried again. After two wrong tries the right answer is shown with a short explanation
-(e.g. `24 : 4 = 6,  6 × 3 = 18`) and a **Next** button. Fraction questions show a fraction bar as a hint.
-The end screen shows how many were right first time.
+(e.g. `24 : 4 = 6,  6 × 3 = 18`) and a **Next** button. The end screen shows how many were right first time.
 
-To add another school game, give it `cat: 'school'` (and optionally `levelNames`, e.g. `['grade2', 'grade3', 'grade3plus']`).
+To add another school game, give it `cat: 'school'`; a game can also define its own `levels`, `levelNames` and `levelBadges`.
 
 ## Designed for a 4-year-old
 

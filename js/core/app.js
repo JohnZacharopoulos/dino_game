@@ -110,7 +110,7 @@ window.Dino = window.Dino || {};
 
   /* ---------- home ---------- */
   function starsHtml(id) {
-    return '<div class="stars">' + LEVELS.map(function (l) {
+    return '<div class="stars">' + levelsOf(id).map(function (l) {
       return '<span class="star' + (D.store.hasStar(id, l) ? ' won' : '') + '">' + ICON.star + '</span>';
     }).join('') + '</div>';
   }
@@ -193,6 +193,9 @@ window.Dino = window.Dino || {};
   }
   window.addEventListener('resize', function () { var b = document.querySelector('.home .tiles'); if (b) fitTiles(b); });
 
+  /* A game may define its own list of levels (e.g. school grades); default: easy / medium / hard. */
+  function levelsOf(id) { return (D.games[id] && D.games[id].levels) || LEVELS; }
+
   /* ---------- level choice ---------- */
   function showLevels(id) {
     var g = D.games[id];
@@ -201,10 +204,13 @@ window.Dino = window.Dino || {};
       '<h1 class="screen-title">' + esc(I.raw('g_' + id)) + '</h1><span class="tb-spacer"></span></header>' +
       '<div class="level-row"></div></section>');
     var row = $('.level-row', node);
-    LEVELS.forEach(function (l, i) {
+    var lv = levelsOf(id);
+    if (lv.length > 3) row.classList.add('many');
+    lv.forEach(function (l, i) {
       var feet = '';
-      for (var k = 0; k <= i; k++) feet += A.footprint();
-      var b = h('<button class="level-btn lvl-' + l + '">' +
+      if (g.levelBadges) feet = '<span class="lvl-badge">' + esc((g.levelBadges[I.lang] || g.levelBadges.en)[i]) + '</span>';
+      else for (var k = 0; k <= i; k++) feet += A.footprint();
+      var b = h('<button class="level-btn lvl-' + l + '" style="animation-delay:' + (i * 70) + 'ms">' +
         '<div class="lvl-feet">' + feet + '</div>' +
         '<div class="lvl-name">' + esc(I.raw(g.levelNames ? g.levelNames[i] : l)) + '</div>' +
         '<span class="star' + (D.store.hasStar(id, l) ? ' won' : '') + '">' + ICON.star + '</span></button>');
@@ -290,7 +296,7 @@ window.Dino = window.Dino || {};
     D.sfx.fanfare();
     confetti();
     var dino = A.DINOS[rand(0, A.DINOS.length - 1)];
-    var next = LEVELS[LEVELS.indexOf(level) + 1];
+    var lvls = levelsOf(id), next = lvls[lvls.indexOf(level) + 1];
     var ov = h('<div class="overlay done-overlay"><div class="done-card">' +
       '<div class="big-star spin-in">' + ICON.star + '</div>' +
       '<div class="done-dino dance">' + A.dino(dino) + '</div>' +
