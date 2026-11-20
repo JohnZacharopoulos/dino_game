@@ -119,6 +119,17 @@ svg { display: block; }
 .tile .star { width: clamp(16px, calc(var(--tw, 160px) * .15), 26px); height: clamp(16px, calc(var(--tw, 160px) * .15), 26px); }
 .star.won { color: var(--star); filter: drop-shadow(0 2px 0 rgba(0,0,0,.25)); }
 
+/* ----- category tabs ----- */
+.cat-tabs { display: flex; justify-content: center; gap: 12px; padding: 2px 12px 4px; flex: none; }
+.cat-tab { display: flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px 0 10px; border-radius: 26px; background: rgba(255,255,255,.6);
+  font-size: 20px; font-weight: 800; color: #3b5a43; box-shadow: 0 4px 0 var(--shadow); }
+.cat-tab .icon, .cat-tab .cat-dino { width: 40px; height: 36px; }
+.cat-tab .icon { color: #2b6cb0; }
+.cat-tab .cat-dino svg { width: 100%; height: 100%; }
+.cat-tab.on { background: #fff; color: var(--ink); box-shadow: 0 0 0 4px var(--easy), 0 4px 0 var(--shadow); }
+.done-extra { font-size: clamp(18px, 3vmin, 24px); font-weight: 700; color: #4b5d50; margin: -8px 0 16px; }
+@media (max-width: 560px), (max-height: 520px) { .cat-tab { height: 44px; font-size: 17px; padding: 0 14px 0 8px; } .cat-tab .icon, .cat-tab .cat-dino { width: 32px; height: 30px; } }
+
 /* ----- levels ----- */
 .level-row { flex: 1; display: flex; align-items: center; justify-content: center; gap: clamp(14px, 4vw, 40px); padding: 16px; flex-wrap: wrap; }
 .level-btn {
@@ -220,6 +231,38 @@ svg { display: block; }
 .card-front svg { width: 92%; }
 .card.matched .card-inner { animation: matched 1s forwards; }
 @keyframes matched { 0% { transform: rotateY(180deg); } 30% { transform: rotateY(180deg) scale(1.15); } 60% { transform: rotateY(180deg) scale(1.15) rotate(8deg); opacity: 1; } 100% { transform: rotateY(180deg) scale(0); opacity: 0; } }
+
+/* ====== Maths with Rex (school) ====== */
+.math-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(10px, 2.5vh, 24px); }
+.math-card { background: #fff; border-radius: 26px; padding: clamp(14px, 3vh, 28px) clamp(16px, 4vw, 40px); box-shadow: 0 8px 0 var(--shadow);
+  width: min(100%, 760px); text-align: center; -webkit-user-select: text; user-select: text; }
+.math-q { font-size: clamp(30px, 7vmin, 64px); font-weight: 800; color: var(--ink); line-height: 1.25; }
+.math-q small { font-size: .45em; color: #5b6b60; }
+.math-q .word { display: block; font-size: clamp(19px, 3.6vmin, 30px); font-weight: 700; line-height: 1.4; text-align: left; }
+.frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1; margin: 0 .12em; font-size: .85em; }
+.frac > span:first-child { border-bottom: .09em solid currentColor; padding: 0 .12em .06em; }
+.frac > span:last-child { padding-top: .06em; }
+.frac-bar { display: flex; gap: 4px; margin: 14px auto 0; width: min(100%, 420px); height: 30px; }
+.frac-bar i { flex: 1; border-radius: 6px; background: #e3eef6; border: 3px solid var(--c); }
+.frac-bar i.on { background: var(--c); }
+.math-answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(10px, 2vw, 18px); width: min(100%, 620px); }
+.math-ans { height: clamp(64px, 13vh, 104px); border-radius: 22px; background: #fff; box-shadow: 0 6px 0 var(--shadow); border: 4px solid transparent;
+  font-size: clamp(30px, 6.5vmin, 54px); font-weight: 800; color: var(--d); transition: background .2s, color .2s; }
+.math-ans:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--shadow); }
+.math-ans.yes { background: var(--easy); color: #fff; border-color: #fff; box-shadow: 0 6px 0 var(--easy-d); }
+.math-ans.reveal { animation: jump .6s; }
+.math-ans.no { background: #ffe1e1; color: #c23b3b; opacity: .7; }
+.math-why { min-height: 1.6em; font-size: clamp(18px, 3.4vmin, 28px); font-weight: 700; color: var(--d); opacity: 0; transition: opacity .3s;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; text-align: center; }
+.math-why.show { opacity: 1; }
+.math-why span { background: rgba(255,255,255,.85); padding: 6px 14px; border-radius: 14px; }
+.math-next { display: inline-flex; align-items: center; gap: 8px; font-size: 22px; }
+.math-next .icon { width: 26px; height: 26px; }
+@media (max-height: 520px) and (orientation: landscape) {
+  .math-wrap { flex-direction: row; flex-wrap: wrap; align-content: center; }
+  .math-card { width: 48%; } .math-answers { width: 46%; } .math-why { width: 100%; min-height: 0; }
+  .math-ans { height: clamp(52px, 17vh, 80px); }
+}
 
 /* ====== Coconut Pop ====== */
 .coco-world { position: absolute; inset: 0; border-radius: 26px; overflow: hidden; touch-action: none; cursor: pointer;

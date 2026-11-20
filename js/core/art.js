@@ -274,6 +274,7 @@ window.Dino = window.Dino || {};
     down: ic('<path d="M32 52 L56 16 H8 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
     left: ic('<path d="M12 32 L48 8 V56 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
     right: ic('<path d="M52 32 L16 8 V56 Z" fill="currentColor" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>'),
+    book: ic('<path d="M32 14 C24 8 12 8 6 10 V52 C12 50 24 50 32 56 C40 50 52 50 58 52 V10 C52 8 40 8 32 14 Z" fill="#fff" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M32 14 V56" stroke="currentColor" stroke-width="4"/><path d="M14 22 H24 M14 30 H24 M40 22 H50 M40 30 H50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>'),
     eye: ic('<path d="M4 32 C16 12 48 12 60 32 C48 52 16 52 4 32 Z" fill="#fff" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><circle cx="32" cy="32" r="10" fill="currentColor"/>'),
     camera: ic('<rect x="6" y="18" width="52" height="38" rx="8" fill="currentColor"/><path d="M22 18 L26 10 H38 L42 18 Z" fill="currentColor"/><circle cx="32" cy="37" r="12" fill="#fff"/><circle cx="32" cy="37" r="7" fill="currentColor"/>'),
     music: ic('<path d="M24 46 V12 L54 6 V40" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/><ellipse cx="17" cy="47" rx="9" ry="7" fill="currentColor"/><ellipse cx="47" cy="41" rx="9" ry="7" fill="currentColor"/>')

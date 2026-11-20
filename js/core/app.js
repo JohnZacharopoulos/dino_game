@@ -9,7 +9,10 @@ window.Dino = window.Dino || {};
 
   D.games = D.games || {};
   var GAME_ORDER = ['memory', 'maze', 'puzzle', 'fossil', 'eggs', 'shadow', 'odd', 'size',
-                    'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'coco', 'build', 'sounds'];
+                    'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'coco', 'build', 'sounds',
+                    'math'];
+  // Home-screen categories. A game says which one it belongs to with  cat: 'school'  (default 'play').
+  var CATS = [{ id: 'play', icon: 'dino' }, { id: 'school', icon: 'book' }];
   var LEVELS = ['easy', 'medium', 'hard'];
   var app, current = null;
   var A = D.art, I = D.i18n, ICON = D.art.ICONS;
@@ -143,11 +146,25 @@ window.Dino = window.Dino || {};
   function showHome(greet) {
     var node = h('<section class="screen home">' +
       '<header class="topbar"><h1 class="logo small">' + esc(I.raw('title')) + '</h1>' + topRight() + '</header>' +
-      '<div class="tiles"></div></section>');
+      '<nav class="cat-tabs"></nav><div class="tiles"></div></section>');
     var tiles = $('.tiles', node);
-    GAME_ORDER.forEach(function (id, i) {
+    var cat = D.store.settings().tab || 'play';
+    var tabs = $('.cat-tabs', node);
+    CATS.forEach(function (c) {
+      var b = h('<button class="cat-tab' + (c.id === cat ? ' on' : '') + '">' +
+        (c.icon === 'book' ? A.ICONS.book : '<span class="cat-dino">' + A.dino('trex') + '</span>') +
+        '<span>' + esc(I.raw('cat_' + c.id)) + '</span></button>');
+      onTap(b, function () {
+        if (c.id === cat) return;
+        D.sfx.tap();
+        D.store.set('tab', c.id);
+        showHome(false);
+        D.speech.say(I.raw('cat_' + c.id));
+      });
+      tabs.appendChild(b);
+    });
+    GAME_ORDER.filter(function (id) { return D.games[id] && (D.games[id].cat || 'play') === cat; }).forEach(function (id, i) {
       var g = D.games[id];
-      if (!g) return;
       var tile = h('<button class="tile" style="--c:' + g.color + ';--d:' + g.dark + ';animation-delay:' + (i * 70) + 'ms">' +
         '<div class="tile-pic">' + A.TILES[id] + '</div>' +
         '<div class="tile-name">' + esc(I.raw('g_' + id)) + '</div>' + (g.free ? '<div class="stars free">' + ICON.music.replace('class="icon"', 'class="icon star"') + '</div>' : starsHtml(id)) + '</button>');
@@ -189,7 +206,7 @@ window.Dino = window.Dino || {};
       for (var k = 0; k <= i; k++) feet += A.footprint();
       var b = h('<button class="level-btn lvl-' + l + '">' +
         '<div class="lvl-feet">' + feet + '</div>' +
-        '<div class="lvl-name">' + esc(I.raw(l)) + '</div>' +
+        '<div class="lvl-name">' + esc(I.raw(g.levelNames ? g.levelNames[i] : l)) + '</div>' +
         '<span class="star' + (D.store.hasStar(id, l) ? ' won' : '') + '">' + ICON.star + '</span></button>');
       onTap(b, function () { D.sfx.tap(); startGame(id, l); });
       row.appendChild(b);
@@ -241,7 +258,7 @@ window.Dino = window.Dino || {};
         for (var i = 0; i < total; i++) html += '<span class="pstep' + (i < done ? ' done' : '') + '">' + A.footprint() + '</span>';
         p.innerHTML = html;
       },
-      complete: function () { levelComplete(id, level, node); },
+      complete: function (extra) { levelComplete(id, level, node, extra); },
       _cleanup: function () {
         alive = false;
         timers.forEach(clearTimeout);
@@ -268,7 +285,7 @@ window.Dino = window.Dino || {};
     });
   }
 
-  function levelComplete(id, level, node) {
+  function levelComplete(id, level, node, extra) {
     D.store.addStar(id, level);
     D.sfx.fanfare();
     confetti();
@@ -278,13 +295,14 @@ window.Dino = window.Dino || {};
       '<div class="big-star spin-in">' + ICON.star + '</div>' +
       '<div class="done-dino dance">' + A.dino(dino) + '</div>' +
       '<div class="done-text">' + esc(t('levelDone')) + '</div>' +
+      (extra ? '<div class="done-extra">' + esc(extra) + '</div>' : '') +
       '<div class="done-actions">' +
       '<button class="icon-btn big home-btn" aria-label="home">' + ICON.home + '</button>' +
       '<button class="icon-btn big replay-btn" aria-label="replay">' + ICON.replay + '</button>' +
       (next ? '<button class="icon-btn big go next-btn" aria-label="next">' + ICON.next + '</button>' : '') +
       '</div></div></div>');
     node.appendChild(ov);
-    D.speech.say($('.done-text', ov).textContent);
+    D.speech.say($('.done-text', ov).textContent + (extra ? ' ' + extra : ''));
     onTap($('.home-btn', ov), function () { D.sfx.tap(); showHome(false); });
     onTap($('.replay-btn', ov), function () { D.sfx.tap(); startGame(id, level); });
     if (next) onTap($('.next-btn', ov), function () { D.sfx.tap(); startGame(id, next); });

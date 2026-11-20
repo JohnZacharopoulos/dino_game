@@ -30,6 +30,21 @@ In Coconut Pop, tap where Rex should go: he walks there and shoots his vine (dra
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
 
+## 📚 School category (ages ~7–9)
+
+The home screen has two tabs: **🦖 Παιχνίδια / Play** (the games above, for a 4-year-old) and
+**📚 Σχολείο / School**, with educational games for older children following the Greek primary curriculum.
+
+| Game | Β΄ Δημοτικού | Γ΄ Δημοτικού | Γ΄ – Πρόκληση |
+|---|---|---|---|
+| ➗ **Μαθηματικά με τον Ρεξ / Maths with Rex** – 10 multiple-choice questions | + and − within 100, times tables 2·3·4·5·10, half/double, simple word problems | carrying, all tables, division, fractions of a number (½, ⅓, ¼, ¾ of 24…), missing numbers | 3-digit numbers, 2-digit × 1-digit, any fraction n/d of a number, word problems |
+
+A wrong answer can be tried again. After two wrong tries the right answer is shown with a short explanation
+(e.g. `24 : 4 = 6,  6 × 3 = 18`) and a **Next** button. Fraction questions show a fraction bar as a hint.
+The end screen shows how many were right first time.
+
+To add another school game, give it `cat: 'school'` (and optionally `levelNames`, e.g. `['grade2', 'grade3', 'grade3plus']`).
+
 ## Designed for a 4-year-old
 
 - **No reading needed.** Every instruction is spoken aloud (and shown as a caption). The 🔊 button repeats it.
@@ -84,7 +99,7 @@ index.html
 css/style.css
 js/core/   art.js  art-extra.js  i18n.js  store.js  speech.js  sound.js  app.js
 js/games/  one file per game (memory, maze, puzzle, fossil, eggs, shadow, odd, size,
-           pattern, feed, dots, color, chomp, run, coco, build, sounds)
+           pattern, feed, dots, color, chomp, run, coco, build, sounds, math)
 photos/    photos.js  (+ your pictures)
 ```
 
