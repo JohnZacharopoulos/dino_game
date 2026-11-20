@@ -1,6 +1,6 @@
 # 🦖 Δεινο-Παιχνίδια / Dino Games
 
-Twenty dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
+Twenty-one dinosaur games for a 4-year-old, in **Greek and English**, that run in any modern browser.
 **No installation, no internet, no server:** copy the folder anywhere and double-click `index.html`.
 On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to Home Screen**.
 
@@ -20,6 +20,7 @@ On an iPhone or iPad, open the hosted link in Safari and use **Share → Add to 
 | 🎨 **Colouring** | 4 colours | 6 colours | 8 colours + background to paint |
 | 🌿 **Hungry Dino** – eat all the leaves in the garden maze | small maze, no beetles | 1 wandering beetle, 1 golden egg | 2 beetles (one follows you), 2 golden eggs |
 | 🏃 **Jumpy Rex** – tap to jump over rocks, logs and bushes, run to the nest | slow, 6 obstacles, an arrow above Rex and a spoken "Jump!" before each one | faster, 9 obstacles, help for the first 2 | fastest, 12 obstacles incl. tall rocks and double rocks |
+| 🏰 **Nest Defenders** (tower defence) – place dino defenders by the path to scare away egg thieves; upgrade and sell them | 8 waves, gentle | 12 waves, dragonflies from wave 7 | 15 big waves, dragonflies from wave 5, two boss waves |
 | 🪃 **Rex's Slingshot** – pull back and let go to launch coconuts at towers of planks and stones; knock all the fruit down and Rex eats it | 1–2 small towers, long aiming guide | 2 towers or 2 floors, short guide | stone bases, pyramids, no guide |
 | 🛤️ **Rex on the Trail** – the trail scrolls down; move Rex left/right to dodge rocks, logs, bushes and stumps and collect stars | slow, 3 lanes, an arrow and a spoken "Δεξιά!/Αριστερά!" before each obstacle | faster, 4 lanes, some double rows | fastest, 5 lanes, many double rows |
 | 🥥 **Coconut Pop** – Rex shoots a vine up; big coconuts split into smaller ones until they pop | 1 big coconut, slow | 1 giant coconut | 2 coconuts, faster |
@@ -34,6 +35,23 @@ In Rex's Slingshot, press anywhere, pull back and let go; ↻ rebuilds the tower
 In Coconut Pop, tap where Rex should go: he walks there and shoots his vine (drag to steer; on a computer ← → to walk and Space to shoot). A coconut landing on his head is just a funny bonk.
 
 Every level has a few short rounds (footprints at the top show progress) and ends with confetti and a star. ⭐
+
+### 🏰 Nest Defenders (tower defence)
+
+Egg thieves (beetles, fast lizards, armoured snails, dragonflies and a giant boss beetle) walk the path to the nest.
+Tap a defender in the shop, then a grass tile to place it; tap a defender to **upgrade** it (up to ★★★) or **sell** it.
+Scared thieves vanish in a puff of smoke and drop ⭐ to spend. ▶ starts the next wave, ⏩ doubles the speed
+(keyboard: 1–5 pick a defender, Space starts the wave, Esc cancels).
+
+| Defender | Power |
+|---|---|
+| Βροντόσαυρος – Καρύδες / Coconuts | all-rounder, single target |
+| Πτερόδακτυλος – Σποράκια / Seeds | fast, long range, **hits dragonflies** |
+| Τρικεράτωψ – Λάσπη / Mud | splash that **slows** thieves |
+| Αγκυλόσαυρος – Ουρά-ρόπαλο / Tail club | hits everyone close to it |
+| Τυραννόσαυρος – Βρυχηθμός / Mega roar | big shockwave + slow, **hits dragonflies** |
+
+If the thieves take all the eggs it is not game over: the wave can be retried, and every retry gives back eggs and a few extra stars, so nobody gets stuck.
 
 ### 🖼️ Dino Scene Maker (big screens only)
 
@@ -120,7 +138,7 @@ index.html
 css/style.css
 js/core/   art.js  art-extra.js  i18n.js  store.js  speech.js  sound.js  app.js
 js/games/  one file per game (memory, maze, puzzle, fossil, eggs, shadow, odd, size,
-           pattern, feed, dots, color, chomp, run, dodge, sling, coco, scene, build, sounds, math)
+           pattern, feed, dots, color, chomp, run, dodge, sling, td, coco, scene, build, sounds, math)
 photos/    photos.js  (+ your pictures)
 ```
 
