@@ -9,7 +9,7 @@ window.Dino = window.Dino || {};
 
   D.games = D.games || {};
   var GAME_ORDER = ['memory', 'maze', 'puzzle', 'fossil', 'eggs', 'shadow', 'odd', 'size',
-                    'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'dodge', 'sling', 'td', 'coco', 'build', 'sounds',
+                    'pattern', 'feed', 'dots', 'color', 'chomp', 'run', 'dodge', 'sling', 'td', 'space', 'coco', 'build', 'sounds',
                     'scene', 'math'];
   // Home-screen categories. A game says which one it belongs to with  cat: 'school'  (default 'play').
   var CATS = [{ id: 'play', icon: 'dino' }, { id: 'school', icon: 'book' }];
